@@ -1,9 +1,48 @@
+<div class="container">
+
 <h2>Sign up</h2>
 
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
+    <%= f.input :first_name,
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "first_name" }%>
+    <%= f.input :last_name,
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "last_name" }%>
+    <%= f.input :preferred_name,
+                required: false,
+                autofocus: true,
+                input_html: { autocomplete: "preferred_name" }%>
+    <%= f.input :date_of_birth,
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "date_of_birth" }%>
+    <%= f.input :gender,
+                required: true,
+                collection:  [ ['male', 'Male' ], ['female', 'Female'], ['other',"Other"],["not_to_say", "Prefer not to say"]],
+                label_method: :second,
+                value_method: :first,
+                autofocus: true,
+                input_html: { autocomplete: "gender" }%>
+    <%= f.input :nationality, as: :country,
+                label: "Place of birth",
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "nationality" }%>
+    <%= f.input :contact_number,
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "contact_number" }%>
+    <%= f.input :bio,
+                label: "What do you want your flatmates to know about you?",
+                required: false,
+                autofocus: true,
+                input_html: { autocomplete: "false" }%>
     <%= f.input :email,
                 required: true,
                 autofocus: true,
@@ -23,3 +62,4 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+</div>

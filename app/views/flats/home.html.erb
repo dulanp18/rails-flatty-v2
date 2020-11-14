@@ -1,0 +1,17 @@
+<div class="container text-center">
+  <% if @tenant.nil? %>
+    <%= link_to 'Create A Flat', new_flat_path %>
+  <% else %>
+
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h6 class="card-subtitle mb-2 text-muted">Welcome To</h6>
+      <h5 class="card-title"><%= @flat.street_address  %></h5>
+      <p class="card-text">Your flat currently has <%= @flat.current_tenants_num %> / <%= @flat.max_tenants_nums %> occupants</p>
+      <%= link_to "Add A Flatmate", "#" %>
+    </div>
+  </div>
+
+
+  <% end %>
+</div>

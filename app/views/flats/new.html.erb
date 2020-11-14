@@ -1,0 +1,24 @@
+<div class="container">
+  <h2>Please Enter Your Flat Details</h2>
+
+  <%= simple_form_for @flat do |f| %>
+  <%= f.input :street_address %>
+  <%= f.input :suburb %>
+  <%= f.input :city %>
+  <%= f.input :post_code %>
+  <%= f.label :country  %>
+  <%= f.country_select :country %>
+  <%= f.input :max_tenants_nums %>
+  <%= f.input :lease_start_date %>
+  <%= f.input :length_of_lease %>
+
+  <%= simple_fields_for :other do |o|  %>
+    <%= o.input :head_tenant, as: :boolean, checked_value: true, unchecked_value: false %>
+    <%= o.input :agreement_type, collection: ['Lease', 'Flatmate'], label: "What type of agreement are you on?"  %>
+  <% end %>
+
+  <%= f.button :submit %>
+  <% end %>
+
+
+</div>

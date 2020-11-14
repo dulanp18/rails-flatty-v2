@@ -10,10 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_11_180622) do
+ActiveRecord::Schema.define(version: 2020_11_11_181129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "flats", force: :cascade do |t|
+    t.string "flat_name"
+    t.string "street_address", null: false
+    t.string "suburb", null: false
+    t.string "city", null: false
+    t.integer "post_code", null: false
+    t.string "country", null: false
+    t.integer "max_tenants_nums", null: false
+    t.integer "current_tenants_num"
+    t.date "lease_start_date", null: false
+    t.integer "length_of_lease", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tenants", force: :cascade do |t|
+    t.bigint "flat_id", null: false
+    t.bigint "user_id", null: false
+    t.string "tenant_agreement_type", null: false
+    t.boolean "head_tenant"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["flat_id"], name: "index_tenants_on_flat_id"
+    t.index ["user_id"], name: "index_tenants_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -23,8 +49,18 @@ ActiveRecord::Schema.define(version: 2020_11_11_180622) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "preferred_name"
+    t.date "date_of_birth", null: false
+    t.string "nationality", null: false
+    t.string "gender", null: false
+    t.string "contact_number", null: false
+    t.text "bio"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "tenants", "flats"
+  add_foreign_key "tenants", "users"
 end
