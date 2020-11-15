@@ -8,4 +8,12 @@ Rails.application.routes.draw do
 
   get '/home', to: 'flats#home', as: 'home'
 
+  get '/find_tenant', to: 'tenants#find', as: 'find_tenant'
+
+
+  post '/join', to: 'flats#join', as: 'join'
+
+
+
+
 end
