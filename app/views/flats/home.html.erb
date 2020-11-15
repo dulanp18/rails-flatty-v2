@@ -1,17 +1,56 @@
-<div class="container text-center">
+<div class="container">
   <% if @tenant.nil? %>
-    <%= link_to 'Create A Flat', new_flat_path %>
-  <% else %>
-
-  <div class="card" style="width: 18rem;">
+  <div class="card">
     <div class="card-body">
-      <h6 class="card-subtitle mb-2 text-muted">Welcome To</h6>
-      <h5 class="card-title"><%= @flat.street_address  %></h5>
-      <p class="card-text">Your flat currently has <%= @flat.current_tenants_num %> / <%= @flat.max_tenants_nums %> occupants</p>
-      <%= link_to "Add A Flatmate", "#" %>
+      <h1>You currently are not sharing a flat.</h1>
+      <%= link_to 'Create Your Own', new_flat_path %>
+      <div>or<br> Request Your Head Tenant To Add You To Your Flat</div>
     </div>
   </div>
 
 
+  <% else %>
+
+
+  <div class="card text-center m-3">
+    <div class="card-body">
+      <h6>Welcome To</h6>
+      <h1><%= @flat.street_address  %></h1>
+      <p>Your flat currently has <%= @flat.current_tenants_num %> / <%= @flat.max_tenants_nums %> occupants</p>
+      <%= link_to "Add A Flatmate", find_tenant_path %>
+    </div>
+  </div>
   <% end %>
+
+  <div class='card m-3'>
+    <h3>Your current flatmates are </h3>
+    <div id="accordion">
+    <% @tenants.each do |tenant| %>
+      <% if tenant.user.id != current_user.id %>
+        <% id = "collapse"+ tenant.id.to_s %>
+        <% data = "#"+ id %>
+        <% heading = "heading"+ tenant.id.to_s %>
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target='<%= data %>' aria-expanded="true" aria-controls='<%= id  %>'>
+                <%= tenant.user.first_name + " " + tenant.user.last_name %>
+              </button>
+            </h5>
+          </div>
+
+          <div id='<%= id %>' class="collapse" aria-labelledby='<%= heading %>' data-parent="#accordion">
+            <div class="card-body d-flex justify-content-between">
+              <p><%= tenant.user.email  %></p>
+              <p><%= tenant.user.date_of_birth %></p>
+              <p><%= tenant.user.nationality  %></p>
+              <p><%= tenant.user.bio.nil? ? "No Description" : tenant.user.bio  %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+    </div>
+  </div>
+
 </div>
