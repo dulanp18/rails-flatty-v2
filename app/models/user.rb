@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_one :tenant
+  has_many :tenants
 
   def country_name
     country = ISO3166::Country[nationality]

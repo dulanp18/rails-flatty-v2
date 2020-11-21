@@ -29,7 +29,7 @@
           <p><%= user.date_of_birth %></p>
           <p><%= user.nationality  %></p>
           <p><%= user.bio.nil? ? "No Description" : user.bio  %>
-          <span class="badge badge-primary badge-pill"><%= user.tenant.nil? ? "Looking For A Flat" : "Sharing A Flat"  %></span>
+          <span class="badge badge-primary badge-pill"><%= user.tenants.where(active_tenant: :true).length == 0 ? "Looking For A Flat" : "Sharing A Flat"  %></span>
         </div>
         <div class="card-footer">
           <p>Want to add Nipunee To Your Flat?</p>

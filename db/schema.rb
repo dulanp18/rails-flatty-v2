@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_11_181129) do
+ActiveRecord::Schema.define(version: 2020_11_21_221052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2020_11_11_181129) do
     t.boolean "head_tenant"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "active_tenant", default: true
     t.index ["flat_id"], name: "index_tenants_on_flat_id"
     t.index ["user_id"], name: "index_tenants_on_user_id"
   end

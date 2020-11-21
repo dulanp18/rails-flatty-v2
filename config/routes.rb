@@ -6,12 +6,14 @@ Rails.application.routes.draw do
 
   resources :flats
 
+  resources :tenants
+
   get '/home', to: 'flats#home', as: 'home'
+  post '/join', to: 'flats#join', as: 'join'
+  post '/remove', to: 'flats#remove', as: 'remove'
 
   get '/find_tenant', to: 'tenants#find', as: 'find_tenant'
 
-
-  post '/join', to: 'flats#join', as: 'join'
 
 
 
