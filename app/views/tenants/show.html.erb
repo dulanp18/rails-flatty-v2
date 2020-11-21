@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="card">
+    <div class="card-body d-flex justify-content-between">
+      <h1><%= @tenant.user.first_name + " " + @tenant.user.last_name %></h1>
+      <% if current_user.tenant.head_tenant == true %>
+        <%= link_to "Remove From Flat", '#', class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+   <div class="card">
+    <div class="card-body">
+      <h2>Personal Information</h2>
+      <p><%= @tenant.user.date_of_birth %></p>
+      <p><%= @tenant.user.nationality %></p>
+      <p><%= @tenant.user.gender.titlecase %></p>
+      <p><%= @tenant.user.bio.titlecase %></p>
+    </div>
+  </div>
+     <div class="card">
+    <div class="card-body">
+      <h2>Contact Information</h2>
+      <p><%= @tenant.user.contact_number %></p>
+      <p><%= @tenant.user.email %></p>
+    </div>
+  </div>
+</div>

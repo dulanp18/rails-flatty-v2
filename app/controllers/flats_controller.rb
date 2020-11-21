@@ -32,15 +32,15 @@ class FlatsController < ApplicationController
   end
 
   def home
-    @tenant = current_user.tenant
+    @tenant = current_user.tenants.where(active_tenant: true)[0]
     if !@tenant.nil?
       @flat = @tenant.flat
-      @tenants = @flat.tenants
+      @active_tenants = @flat.tenants.where(active_tenant: true)
     end
   end
 
   def join
-    flat = current_user.tenant.flat
+    flat = current_user.tenants.where(active_tenant: true)[0].flat
     new_tenant = User.find(params[:user][:id])
     tenant = Tenant.new
     tenant.user = new_tenant
@@ -48,16 +48,24 @@ class FlatsController < ApplicationController
     tenant.tenant_agreement_type = 'lease' if params[:user][:agreement] == 'lease'
     tenant.tenant_agreement_type = 'flatmate' if params[:user][:agreement] == 'flatmate'
     tenant.head_tenant = false
+    tenant.active_tenant = true
     if tenant.save
       flat.current_tenants_num += 1
       flat.save
     end
-
-
     redirect_to home_path
-
   end
 
+  def remove
+    tenant = Tenant.find(params[:tenant][:id])
+    flat = tenant.flat
+    tenant.active_tenant = false
+    if tenant.save
+      flat.current_tenants_num -= 1
+      flat.save
+    end
+    redirect_to home_path
+  end
 
 
   private

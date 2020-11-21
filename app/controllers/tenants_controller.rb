@@ -13,4 +13,8 @@ class TenantsController < ApplicationController
     end
   end
 
+  def show
+    @tenant = Tenant.find(params[:id])
+  end
+
 end

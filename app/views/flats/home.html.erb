@@ -22,12 +22,12 @@
   </div>
   <% end %>
 
-  <% if !@tenants.nil? %>
+  <% if !@active_tenants.nil? %>
     <div class='card m-3'>
       <h3>Your current flatmates are </h3>
       <div id="accordion">
 
-      <% @tenants.each do |tenant| %>
+      <% @active_tenants.each do |tenant| %>
         <% if tenant.user.id != current_user.id %>
           <% id = "collapse"+ tenant.id.to_s %>
           <% data = "#"+ id %>
@@ -42,11 +42,15 @@
             </div>
 
             <div id='<%= id %>' class="collapse" aria-labelledby='<%= heading %>' data-parent="#accordion">
-              <div class="card-body d-flex justify-content-between">
+              <div class="card-body d-flex justify-content-between flex-column">
                 <p><%= tenant.user.email  %></p>
                 <p><%= tenant.user.date_of_birth %></p>
                 <p><%= tenant.user.nationality  %></p>
                 <p><%= tenant.user.bio.nil? ? "No Description" : tenant.user.bio  %>
+                <%= link_to "View Profile", tenant_path(tenant), class: 'btn btn-primary'  %>
+                <% if current_user.tenants.where(active_tenant: :true)[0].head_tenant == true %>
+                  <%= link_to "Remove From Flat", remove_path(:tenant => {:id => tenant.id}), method: :post, class: 'btn btn-primary'  %>
+                <% end %>
               </div>
             </div>
           </div>
